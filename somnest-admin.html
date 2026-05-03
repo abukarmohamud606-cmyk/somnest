@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SomNest Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--green:#1a6b3c;--green-light:#2d9e5f;--green-pale:rgba(26,107,60,0.08);--gold:#c8972a;--gold-light:#e8b84b;--bg:#f8f6f1;--bg2:#ffffff;--dark:#0f1f15;--text:#1a2e20;--text-muted:#6b7c70;--border:#e2ddd4;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Plus Jakarta Sans',sans-serif;font-weight:300;}
+.page{display:none;}.page.active{display:block;}
+
+/* LOGIN */
+#loginPage{min-height:100vh;background:linear-gradient(135deg,var(--dark) 0%,#1a3d25 100%);display:flex;align-items:center;justify-content:center;}
+.login-box{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(20px);border-radius:24px;padding:3rem;width:100%;max-width:420px;}
+.login-logo{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:#fff;text-align:center;margin-bottom:0.3rem;letter-spacing:2px;}
+.login-logo span{color:var(--gold);}
+.login-sub{text-align:center;color:rgba(255,255,255,0.4);font-size:0.8rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:2.5rem;}
+.login-label{display:block;font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.5rem;}
+.login-input{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#fff;padding:0.9em 1.2em;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.95rem;outline:none;margin-bottom:1.2rem;}
+.login-btn{width:100%;background:linear-gradient(135deg,var(--green),var(--green-light));border:none;color:#fff;padding:1em;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.95rem;font-weight:600;cursor:pointer;}
+.login-error{color:#ff6b6b;font-size:0.85rem;text-align:center;margin-top:0.8rem;display:none;}
+
+/* ADMIN */
+#adminPage{background:#f0f2f5;min-height:100vh;}
+.admin-nav{background:var(--dark);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;}
+.admin-nav-logo{font-family:'Playfair Display',serif;font-size:1.4rem;color:#fff;}
+.admin-nav-logo span{color:var(--green-light);}
+.admin-logout{background:rgba(255,100,100,0.1);color:#ff8a8a;border:1px solid rgba(255,100,100,0.2);padding:0.5em 1.2em;border-radius:8px;font-size:0.82rem;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;}
+.admin-body{padding:2rem;}
+.admin-title{font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:0.3rem;color:var(--dark);}
+.admin-subtitle{color:var(--text-muted);font-size:0.9rem;margin-bottom:2rem;}
+.admin-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.2rem;margin-bottom:2rem;}
+.admin-stat-card{background:#fff;border-radius:16px;padding:1.5rem;border:1px solid var(--border);}
+.admin-stat-icon{font-size:1.8rem;margin-bottom:0.8rem;}
+.admin-stat-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--green);}
+.admin-stat-label{font-size:0.8rem;color:var(--text-muted);}
+.admin-card{background:#fff;border-radius:16px;border:1px solid var(--border);padding:1.8rem;margin-bottom:1.5rem;}
+.admin-card-title{font-weight:700;font-size:1.1rem;margin-bottom:1.5rem;}
+.add-form{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.add-form-group{display:flex;flex-direction:column;gap:0.4rem;}
+.add-form-group.full{grid-column:1/-1;}
+.add-label{font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);font-weight:600;}
+.add-input,.add-select,.add-textarea{background:var(--bg);border:1px solid var(--border);color:var(--text);padding:0.8em 1em;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.9rem;outline:none;-webkit-appearance:none;}
+.add-textarea{resize:vertical;min-height:80px;}
+.add-btn{background:var(--green);color:#fff;border:none;padding:0.9em 2em;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:0.9rem;cursor:pointer;grid-column:1/-1;}
+.prop-table{width:100%;border-collapse:collapse;}
+.prop-table th{text-align:left;font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);padding:0.8rem 1rem;border-bottom:2px solid var(--border);font-weight:600;}
+.prop-table td{padding:1rem;border-bottom:1px solid var(--border);font-size:0.88rem;vertical-align:middle;}
+.table-badge{padding:0.25em 0.7em;border-radius:50px;font-size:0.72rem;font-weight:600;}
+.table-iib{background:rgba(26,107,60,0.12);color:var(--green);}
+.table-kiro{background:rgba(200,151,42,0.12);color:var(--gold);}
+.del-btn{background:rgba(220,50,50,0.08);color:#dc3232;border:none;padding:0.4em 0.8em;border-radius:6px;font-size:0.8rem;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;}
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--dark);color:#fff;padding:1rem 1.5rem;border-radius:12px;font-size:0.88rem;z-index:999;transform:translateY(100px);opacity:0;transition:all 0.3s ease;border-left:3px solid var(--green-light);}
+.toast.show{transform:translateY(0);opacity:1;}
+@media(max-width:768px){.add-form{grid-template-columns:1fr;}.add-form-group.full{grid-column:1;}.add-btn{grid-column:1;}}
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+
+<!-- LOGIN -->
+<div id="loginPage" class="page active">
+  <div class="login-box">
+    <div class="login-logo">Som<span>Nest</span></div>
+    <div class="login-sub">Admin Login</div>
+    <label class="login-label">Password</label>
+    <input class="login-input" type="password" id="loginPass" placeholder="Geli passwordka..." onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">🔐 Gal Admin</button>
+    <div class="login-error" id="loginError">❌ Password khalad ah.</div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div id="adminPage" class="page">
+  <div class="admin-nav">
+    <div class="admin-nav-logo">Som<span>Nest</span> Admin</div>
+    <button class="admin-logout" onclick="logout()">🚪 Ka Bax</button>
+  </div>
+  <div class="admin-body">
+    <div class="admin-title">Dashboard</div>
+    <div class="admin-subtitle">Ku soo dhawoow SomNest Admin Panel</div>
+    <div class="admin-stats">
+      <div class="admin-stat-card"><div class="admin-stat-icon">🏠</div><div class="admin-stat-num" id="aStatTotal">0</div><div class="admin-stat-label">Guryaha Wadarta</div></div>
+      <div class="admin-stat-card"><div class="admin-stat-icon">💰</div><div class="admin-stat-num" id="aStatIib">0</div><div class="admin-stat-label">Iib</div></div>
+      <div class="admin-stat-card"><div class="admin-stat-icon">🔑</div><div class="admin-stat-num" id="aStatKiro">0</div><div class="admin-stat-label">Kiro</div></div>
+    </div>
+    <div class="admin-card">
+      <div class="admin-card-title">➕ Guri Cusub Ku Dar</div>
+      <div class="add-form">
+        <div class="add-form-group"><label class="add-label">Magaca Guriga</label><input class="add-input" id="aTitle" placeholder="Tusaale: Villa Hodan..."></div>
+        <div class="add-form-group"><label class="add-label">Xaafadda</label><input class="add-input" id="aLocation" placeholder="Tusaale: Hodan, Muqdisho"></div>
+        <div class="add-form-group"><label class="add-label">Nooca</label><select class="add-select" id="aType"><option value="iib">Iib</option><option value="kiro">Kiro</option></select></div>
+        <div class="add-form-group"><label class="add-label">Qiimaha ($)</label><input class="add-input" id="aPrice" placeholder="Tusaale: 85000"></div>
+        <div class="add-form-group"><label class="add-label">Qolalka</label><input class="add-input" id="aRooms" placeholder="Tusaale: 3"></div>
+        <div class="add-form-group"><label class="add-label">Musqusha</label><input class="add-input" id="aBaths" placeholder="Tusaale: 2"></div>
+        <div class="add-form-group"><label class="add-label">Dhismaha (m2)</label><input class="add-input" id="aSize" placeholder="Tusaale: 200"></div>
+        <div class="add-form-group"><label class="add-label">Emoji</label><select class="add-select" id="aIcon"><option value="🏠">🏠 Guri</option><option value="🏡">🏡 Villa</option><option value="🏢">🏢 Dhisme</option><option value="🌴">🌴 Garden</option></select></div>
+        <div class="add-form-group full"><label class="add-label">Sawirka URL</label><input class="add-input" id="aImageUrl" placeholder="https://i.imgur.com/sawirka.jpg ..."></div>
+        <div class="add-form-group full"><label class="add-label">Faahfaahin</label><textarea class="add-textarea" id="aDesc" placeholder="Ku qor wixii macluumaad ah guriga..."></textarea></div>
+        <button class="add-btn" onclick="addProperty()">✅ Ku Dar Guriga</button>
+      </div>
+    </div>
+    <div class="admin-card">
+      <div class="admin-card-title">📋 Liiska Guryaha <span id="propCount" style="font-size:0.8rem;color:var(--text-muted);font-weight:400"></span></div>
+      <div style="overflow-x:auto;">
+        <table class="prop-table">
+          <thead><tr><th>Magac</th><th>Xaafad</th><th>Nooc</th><th>Qiime</th><th>Qolal</th><th>Tir</th></tr></thead>
+          <tbody id="adminTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL='https://buizklplxznokcqgusab.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ1aXprbHBseHpub2tjcWd1c2FiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc3NzYxMjQsImV4cCI6MjA5MzM1MjEyNH0.UYMGibUZAgrYbabb5Y72wcQspCdHcG7SmSLkrTBPNus';
+const PASSWORD='Moo9306';
+let properties=[];
+
+async function supabaseReq(method,path,body){
+  const res=await fetch(SUPABASE_URL+'/rest/v1/'+path,{
+    method,headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json','Prefer':method==='POST'?'return=representation':''},
+    body:body?JSON.stringify(body):undefined
+  });
+  if(!res.ok)throw new Error(await res.text());
+  return method==='DELETE'?null:res.json();
+}
+
+async function loadProperties(){
+  try{properties=await supabaseReq('GET','properties?select=*&order=created_at.desc');}
+  catch(e){console.error(e);}
+}
+
+function doLogin(){
+  const pass=document.getElementById('loginPass').value.trim();
+  if(pass===PASSWORD){
+    document.getElementById('loginError').style.display='none';
+    document.getElementById('loginPass').value='';
+    document.getElementById('loginPage').classList.remove('active');
+    document.getElementById('adminPage').classList.add('active');
+    loadProperties().then(renderAdmin);
+  } else {
+    document.getElementById('loginError').style.display='block';
+    document.getElementById('loginPass').value='';
+  }
+}
+
+function logout(){
+  document.getElementById('adminPage').classList.remove('active');
+  document.getElementById('loginPage').classList.add('active');
+}
+
+function renderAdmin(){
+  document.getElementById('aStatTotal').textContent=properties.length;
+  document.getElementById('aStatIib').textContent=properties.filter(p=>p.type==='iib').length;
+  document.getElementById('aStatKiro').textContent=properties.filter(p=>p.type==='kiro').length;
+  document.getElementById('propCount').textContent=properties.length+' guri';
+  const tbody=document.getElementById('adminTableBody');
+  if(properties.length===0){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;padding:3rem;color:var(--text-muted)">Guri lama daray weli!</td></tr>';return;}
+  tbody.innerHTML=properties.map(p=>`
+    <tr>
+      <td>${p.icon||'🏠'} ${p.title}</td>
+      <td>📍 ${p.location}</td>
+      <td><span class="table-badge table-${p.type}">${p.type==='iib'?'Iib':'Kiro'}</span></td>
+      <td style="font-weight:600;color:var(--green)">${p.price}</td>
+      <td>${p.rooms} Qol</td>
+      <td><button class="del-btn" onclick="deleteProperty('${p.created_at}')">🗑 Tir</button></td>
+    </tr>`).join('');
+}
+
+async function addProperty(){
+  const title=document.getElementById('aTitle').value.trim();
+  const location=document.getElementById('aLocation').value.trim();
+  const type=document.getElementById('aType').value;
+  const priceRaw=document.getElementById('aPrice').value.trim();
+  const rooms=document.getElementById('aRooms').value.trim();
+  const baths=document.getElementById('aBaths').value.trim();
+  const size=document.getElementById('aSize').value.trim();
+  const icon=document.getElementById('aIcon').value;
+  const description=document.getElementById('aDesc').value.trim();
+  const image_url=document.getElementById('aImageUrl').value.trim();
+  if(!title||!location||!priceRaw||!rooms){showToast('⚠️ Buuxi dhammaan meelaha muhiimka ah!');return;}
+  const price=type==='iib'?'$'+Number(priceRaw).toLocaleString():'$'+Number(priceRaw).toLocaleString()+'/bil';
+  try{
+    showToast('⏳ Waa la kaydiyaa...');
+    await supabaseReq('POST','properties',{title,location,type,price,rooms:Number(rooms)||1,baths:Number(baths)||1,size:Number(size)||0,icon,description:description||'Guri fiican',image_url:image_url||null});
+    ['aTitle','aLocation','aPrice','aRooms','aBaths','aSize','aDesc','aImageUrl'].forEach(id=>document.getElementById(id).value='');
+    await loadProperties();
+    renderAdmin();
+    showToast('✅ Guriga si fiican ayaa loo daray!');
+  }catch(e){showToast('❌ Khalad: '+e.message);}
+}
+
+async function deleteProperty(created_at){
+  if(!confirm('Ma hubtaa inaad tiriyso gurigaan?'))return;
+  try{
+    await supabaseReq('DELETE','properties?created_at=eq.'+encodeURIComponent(created_at));
+    await loadProperties();
+    renderAdmin();
+    showToast('🗑️ Guriga waa la tiriyay.');
+  }catch(e){showToast('❌ Khalad: '+e.message);}
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+</script>
+</body>
+</html>
