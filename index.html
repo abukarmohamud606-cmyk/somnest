@@ -438,7 +438,7 @@ async function deleteProperty(id){
   }catch(e){showToast('❌ Khalad: '+e.message);}
 }
 
-async function submitContact(e){
+async function submitContact(e){const name=document.getElementById('contactForm').querySelector('[name="name"]')?.value||'';const email=document.getElementById('contactForm').querySelector('[name="email"]')?.value||'';const name=document.getElementById('contactForm').querySelector('[name="name"]')?.value||'';const email=document.getElementById('contactForm').querySelector('[name="email"]')?.value||'';
   e.preventDefault();
   const btn=document.getElementById('submitBtn');
   btn.textContent='⏳ Diraya...';btn.disabled=true;
