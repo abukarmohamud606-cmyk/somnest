@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SomNest — Guryaha Muqdisho</title>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init("uMXoJj_QRYVegoylk");</script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--green:#1a6b3c;--green-light:#2d9e5f;--green-pale:rgba(26,107,60,0.08);--gold:#c8972a;--gold-light:#e8b84b;--bg:#f8f6f1;--bg2:#ffffff;--dark:#0f1f15;--text:#1a2e20;--text-muted:#6b7c70;--border:#e2ddd4;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-weight:300;}
+.page{display:none;}.page.active{display:block;}
+nav{position:sticky;top:0;z-index:100;background:rgba(248,246,241,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:1rem 5vw;display:flex;justify-content:space-between;align-items:center;}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--dark);text-decoration:none;}
+.nav-logo span{color:var(--green);}
+.nav-links{display:flex;gap:0.5rem;list-style:none;}
+.nav-links a{color:var(--text-muted);text-decoration:none;font-size:0.85rem;font-weight:500;padding:0.5em 1em;border-radius:8px;transition:all 0.2s;}
+.nav-links a:hover{background:var(--green-pale);color:var(--green);}
+.hero{background:linear-gradient(135deg,var(--dark) 0%,#1a3d25 60%,#0f2d1a 100%);padding:6rem 5vw 5rem;min-height:85vh;display:flex;align-items:center;}
+.hero-content{max-width:700px;}
+.hero-tag{display:inline-flex;align-items:center;gap:0.7rem;background:rgba(200,151,42,0.15);border:1px solid rgba(200,151,42,0.3);color:var(--gold-light);font-size:0.75rem;letter-spacing:3px;text-transform:uppercase;padding:0.5em 1.2em;border-radius:50px;margin-bottom:2rem;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,7vw,5.5rem);font-weight:700;color:#fff;line-height:1.05;margin-bottom:1.5rem;}
+.hero h1 em{font-style:italic;color:var(--gold-light);}
+.hero-desc{color:rgba(255,255,255,0.55);font-size:1.05rem;line-height:1.8;max-width:500px;margin-bottom:2.5rem;}
+.hero-search{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:1.2rem;display:flex;gap:1rem;flex-wrap:wrap;}
+.hero-search select,.hero-search input{flex:1;min-width:150px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:0.8em 1em;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.9rem;outline:none;}
+.hero-search select option{background:#1a3d25;}
+.hero-search-btn{background:var(--gold);color:var(--dark);border:none;padding:0.8em 2em;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:0.9rem;cursor:pointer;}
+.stats-bar{background:var(--bg2);border-bottom:1px solid var(--border);padding:2rem 5vw;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:2rem;}
+.stat{text-align:center;}.stat-num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--green);}
+.stat-label{font-size:0.8rem;color:var(--text-muted);}
+.section{padding:5rem 5vw;}
+.section-tag{font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:0.5rem;}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:600;line-height:1.2;margin-bottom:2rem;}
+.section-title em{font-style:italic;color:var(--green);}
+.filter-bar{display:flex;gap:0.8rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+.filter-btn{background:var(--bg);border:1px solid var(--border);color:var(--text-muted);padding:0.5em 1.2em;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.82rem;cursor:pointer;transition:all 0.2s;font-weight:500;}
+.filter-btn.active,.filter-btn:hover{background:var(--green);color:#fff;border-color:var(--green);}
+.props-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;}
+.prop-card{background:var(--bg2);border-radius:20px;overflow:hidden;border:1px solid var(--border);transition:transform 0.3s,box-shadow 0.3s;cursor:pointer;}
+.prop-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(15,31,21,0.12);}
+.prop-img{height:220px;position:relative;background:linear-gradient(135deg,#1a6b3c,#2d9e5f);display:flex;align-items:center;justify-content:center;font-size:4rem;}
+.prop-badge{position:absolute;top:1rem;left:1rem;padding:0.3em 0.9em;border-radius:50px;font-size:0.72rem;font-weight:600;text-transform:uppercase;}
+.badge-iib{background:var(--green);color:#fff;}.badge-kiro{background:var(--gold);color:var(--dark);}
+.prop-body{padding:1.5rem;}
+.prop-price{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--green);margin-bottom:0.3rem;}
+.prop-title{font-weight:600;font-size:1rem;margin-bottom:0.5rem;}
+.prop-location{color:var(--text-muted);font-size:0.85rem;margin-bottom:1rem;}
+.prop-features{display:flex;gap:1rem;flex-wrap:wrap;}
+.prop-feat{background:var(--green-pale);color:var(--green);font-size:0.78rem;font-weight:600;padding:0.3em 0.8em;border-radius:6px;}
+.prop-actions{display:flex;gap:0.5rem;margin-top:1rem;}
+.btn-contact{flex:1;background:var(--green);color:#fff;border:none;padding:0.7em;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;}
+.btn-save{background:var(--green-pale);color:var(--green);border:none;padding:0.7em 1em;border-radius:10px;cursor:pointer;}
+.empty-state{text-align:center;padding:5rem 2rem;color:var(--text-muted);}
+.empty-icon{font-size:4rem;margin-bottom:1rem;}
+.loading{text-align:center;padding:3rem;color:var(--text-muted);font-size:1.1rem;}
+.contact-section{background:linear-gradient(135deg,var(--dark),#1a3d25);padding:5rem 5vw;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+.contact-left h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);font-weight:600;color:#fff;margin-bottom:1rem;}
+.contact-left h2 em{font-style:italic;color:var(--gold-light);}
+.contact-left p{color:rgba(255,255,255,0.5);line-height:1.8;margin-bottom:2rem;}
+.contact-items{display:flex;flex-direction:column;gap:1rem;}
+.contact-item{display:flex;align-items:center;gap:1rem;color:rgba(255,255,255,0.6);font-size:0.9rem;}
+.contact-item-icon{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
+.cform{display:flex;flex-direction:column;gap:1rem;}
+.cform-group{display:flex;flex-direction:column;gap:0.4rem;}
+.cform-label{font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.35);}
+.cform-input,.cform-select,.cform-textarea{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:0.85em 1.1em;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.9rem;outline:none;-webkit-appearance:none;}
+.cform-select option{background:#1a3d25;}
+.cform-textarea{resize:vertical;min-height:100px;}
+.cform-btn{background:linear-gradient(135deg,var(--green),var(--green-light));border:none;color:#fff;padding:1em;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:0.95rem;cursor:pointer;}
+footer{background:var(--dark);color:rgba(255,255,255,0.3);padding:2rem 5vw;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:0.82rem;}
+.footer-logo{font-family:'Playfair Display',serif;font-size:1.3rem;color:#fff;}
+.footer-logo span{color:var(--green);}
+#adminPage{background:#f0f2f5;min-height:100vh;}
+.admin-nav{background:var(--dark);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;}
+.admin-nav-logo{font-family:'Playfair Display',serif;font-size:1.4rem;color:#fff;}
+.admin-nav-logo span{color:var(--green-light);}
+.admin-nav-right{display:flex;gap:1rem;}
+.admin-view-site{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.12);padding:0.5em 1.2em;border-radius:8px;font-size:0.82rem;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;text-decoration:none;}
+.admin-logout{background:rgba(255,100,100,0.1);color:#ff8a8a;border:1px solid rgba(255,100,100,0.2);padding:0.5em 1.2em;border-radius:8px;font-size:0.82rem;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;}
+.admin-body{padding:2rem;}
+.admin-title{font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:0.3rem;color:var(--dark);}
+.admin-subtitle{color:var(--text-muted);font-size:0.9rem;margin-bottom:2rem;}
+.admin-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.2rem;margin-bottom:2rem;}
+.admin-stat-card{background:#fff;border-radius:16px;padding:1.5rem;border:1px solid var(--border);}
+.admin-stat-icon{font-size:1.8rem;margin-bottom:0.8rem;}
+.admin-stat-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--green);}
+.admin-stat-label{font-size:0.8rem;color:var(--text-muted);}
+.admin-card{background:#fff;border-radius:16px;border:1px solid var(--border);padding:1.8rem;margin-bottom:1.5rem;}
+.admin-card-title{font-weight:700;font-size:1.1rem;margin-bottom:1.5rem;}
+.add-form{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.add-form-group{display:flex;flex-direction:column;gap:0.4rem;}
+.add-form-group.full{grid-column:1/-1;}
+.add-label{font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);font-weight:600;}
+.add-input,.add-select,.add-textarea{background:var(--bg);border:1px solid var(--border);color:var(--text);padding:0.8em 1em;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.9rem;outline:none;-webkit-appearance:none;}
+.add-textarea{resize:vertical;min-height:80px;}
+.add-btn{background:var(--green);color:#fff;border:none;padding:0.9em 2em;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:0.9rem;cursor:pointer;grid-column:1/-1;}
+.prop-table{width:100%;border-collapse:collapse;}
+.prop-table th{text-align:left;font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);padding:0.8rem 1rem;border-bottom:2px solid var(--border);font-weight:600;}
+.prop-table td{padding:1rem;border-bottom:1px solid var(--border);font-size:0.88rem;vertical-align:middle;}
+.prop-table tr:hover td{background:var(--green-pale);}
+.table-badge{padding:0.25em 0.7em;border-radius:50px;font-size:0.72rem;font-weight:600;}
+.table-iib{background:rgba(26,107,60,0.12);color:var(--green);}
+.table-kiro{background:rgba(200,151,42,0.12);color:var(--gold);}
+.del-btn{background:rgba(220,50,50,0.08);color:#dc3232;border:none;padding:0.4em 0.8em;border-radius:6px;font-size:0.8rem;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,31,21,0.7);z-index:500;align-items:center;justify-content:center;backdrop-filter:blur(4px);padding:1rem;}
+.modal-overlay.open{display:flex;}
+.modal{background:#fff;border-radius:24px;max-width:500px;width:100%;padding:2.5rem;position:relative;}
+.modal-close{position:absolute;top:1.2rem;right:1.2rem;background:var(--bg);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1.1rem;}
+.modal-icon{font-size:3rem;text-align:center;margin-bottom:1rem;}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:600;margin-bottom:0.5rem;}
+.modal-price{color:var(--green);font-size:1.3rem;font-weight:700;margin-bottom:1rem;}
+.modal-info{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:1.5rem;}
+.modal-info-item{background:var(--bg);border-radius:10px;padding:0.8rem;}
+.modal-info-label{font-size:0.7rem;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.2rem;}
+.modal-info-val{font-weight:600;font-size:0.9rem;}
+.modal-desc{color:var(--text-muted);font-size:0.88rem;line-height:1.7;margin-bottom:1.5rem;}
+.modal-contact-btn{width:100%;background:var(--green);color:#fff;border:none;padding:1em;border-radius:12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:0.95rem;cursor:pointer;}
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--dark);color:#fff;padding:1rem 1.5rem;border-radius:12px;font-size:0.88rem;z-index:999;transform:translateY(100px);opacity:0;transition:all 0.3s ease;border-left:3px solid var(--green-light);}
+.toast.show{transform:translateY(0);opacity:1;}
+#loginPage{min-height:100vh;background:linear-gradient(135deg,var(--dark) 0%,#1a3d25 100%);display:none!important;align-items:center;justify-content:center;}
+.login-box{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(20px);border-radius:24px;padding:3rem;width:100%;max-width:420px;}
+.login-logo{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:#fff;text-align:center;margin-bottom:0.3rem;letter-spacing:2px;}
+.login-logo span{color:var(--gold);}
+.login-sub{text-align:center;color:rgba(255,255,255,0.4);font-size:0.8rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:2.5rem;}
+.login-label{display:block;font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.5rem;}
+.login-input{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#fff;padding:0.9em 1.2em;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.95rem;outline:none;margin-bottom:1.2rem;}
+.login-btn{width:100%;background:linear-gradient(135deg,var(--green),var(--green-light));border:none;color:#fff;padding:1em;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.95rem;font-weight:600;cursor:pointer;}
+.login-error{color:#ff6b6b;font-size:0.85rem;text-align:center;margin-top:0.8rem;display:none;}
+.login-public{text-align:center;margin-top:1.5rem;color:rgba(255,255,255,0.3);font-size:0.85rem;}
+.login-public a{color:var(--gold);text-decoration:none;}
+@media(max-width:768px){.contact-section{grid-template-columns:1fr;}.add-form{grid-template-columns:1fr;}.add-form-group.full{grid-column:1;}.add-btn{grid-column:1;}}
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-icon" id="mIcon"></div>
+    <div class="modal-title" id="mTitle"></div>
+    <div class="modal-price" id="mPrice"></div>
+    <div class="modal-info" id="mInfo"></div>
+    <div class="modal-desc" id="mDesc"></div>
+    <button class="modal-contact-btn" onclick="closeModal();document.getElementById('contact').scrollIntoView({behavior:'smooth'})">📞 Xiriir Hadda</button>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<!-- Admin login removed -->
+
+<!-- PUBLIC -->
+<div id="publicPage" class="page active">
+  <nav>
+    <a href="#" class="nav-logo" id="secretLogo" onclick="handleLogoClick()">Som<span>Nest</span></a>
+    <ul class="nav-links">
+      <li><a href="#listings">Guryaha</a></li>
+      <li><a href="#contact">Xiriir</a></li>
+    </ul>
+  </nav>
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-tag">🏠 Muqdisho, Somalia</div>
+      <h1>Hel Gurigaaga<br><em>Raalli Ah</em></h1>
+      <p class="hero-desc">SomNest waxay kuu keenaysaa guryaha ugu fiican Muqdisho — iib iyo kiro.</p>
+      <div class="hero-search">
+        <select id="searchType" onchange="filterProps()"><option value="">Dhammaan</option><option value="iib">Iib</option><option value="kiro">Kiro</option></select>
+        <input type="text" id="searchText" placeholder="Xaafad raadi..." oninput="filterProps()">
+        <button class="hero-search-btn" onclick="filterProps()">🔍 Raadi</button>
+      </div>
+    </div>
+  </section>
+  <div class="stats-bar">
+    <div class="stat"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Guryaha Wadarta</div></div>
+    <div class="stat"><div class="stat-num" id="statIib">0</div><div class="stat-label">Iib</div></div>
+    <div class="stat"><div class="stat-num" id="statKiro">0</div><div class="stat-label">Kiro</div></div>
+    <div class="stat"><div class="stat-num">Muqdisho</div><div class="stat-label">Magaalada</div></div>
+  </div>
+  <section class="section" id="listings">
+    <div class="section-tag">Hel Guriyahaaga</div>
+    <h2 class="section-title">Guryaha <em>Diyaarka</em> Ah</h2>
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="setFilter('',this)">Dhammaan</button>
+      <button class="filter-btn" onclick="setFilter('iib',this)">Iib</button>
+      <button class="filter-btn" onclick="setFilter('kiro',this)">Kiro</button>
+    </div>
+    <div id="publicProps"><div class="loading">⏳ Guryaha waa la soo rarayo...</div></div>
+  </section>
+  <section class="contact-section" id="contact">
+    <div class="contact-left">
+      <div class="section-tag" style="color:var(--gold-light)">Nala Xiriir</div>
+      <h2>Guri <em>Rabtaa?</em><br>Nala Hadal</h2>
+      <p>Xariir naga soo dir oo aan kugu soo xariirno si degdeg ah.</p>
+      <div class="contact-items">
+        <div class="contact-item"><div class="contact-item-icon">📞</div><span>+252 61 350 9306</span></div>
+        <div class="contact-item"><div class="contact-item-icon">💬</div><span>WhatsApp: +252 61 350 9306</span></div>
+        <div class="contact-item"><div class="contact-item-icon">📧</div><span>info@somnest-muqdisho.com</span></div>
+        <div class="contact-item"><div class="contact-item-icon">📍</div><span>Muqdisho, Somalia</span></div>
+        <div class="contact-item"><div class="contact-item-icon">🕐</div><span>8:00 AM – 8:00 PM</span></div>
+      </div>
+    </div>
+    <div>
+      <form class="cform" id="contactForm" onsubmit="submitContact(event)">
+        <input type="hidden" name="access_key" value="b87508dd-5b55-4e01-ad9b-99b92962ca50">
+        <input type="hidden" name="subject" value="SomNest - Codsi Cusub!"><input type="hidden" name="replyto" value="info@somnest-muqdisho.com">
+        <div class="cform-group"><label class="cform-label">Magacaaga</label><input class="cform-input" name="name" placeholder="Magacaaga..." required></div>
+        <div class="cform-group"><label class="cform-label">Telefoon</label><input class="cform-input" name="phone" placeholder="+252..." required></div>
+        <div class="cform-group"><label class="cform-label">Email</label><input class="cform-input" name="email" type="email" placeholder="email@gmail.com..."></div>
+        <div class="cform-group"><label class="cform-label">Maxaad Rabaa</label><select class="cform-select" name="type"><option>Guri Iib Ah</option><option>Guri Kiro Ah</option><option>Macluumaad Dheeraad Ah</option></select></div>
+        <div class="cform-group"><label class="cform-label">Faahfaahin</label><textarea class="cform-textarea" name="message" placeholder="Xaafadda, qolalka, miisaaniyada..."></textarea></div>
+        <button type="submit" class="cform-btn" id="submitBtn">📨 Dir Codsi</button>
+      </form>
+    </div>
+  </section>
+  <footer>
+    <div class="footer-logo">Som<span>Nest</span></div><button onclick="showLogin()" style="background:transparent;border:none;color:transparent;cursor:default;font-size:1px;padding:10px;">.</button>
+    <span id="secretAdmin" onclick="handleSecretClick()" style="cursor:default">© 2026 SomNest. Dhammaan xuquuqda way xafidan yihiin.</span>
+    <span>Muqdisho, Somalia</span>
+  </footer>
+</div>
+
+<!-- ADMIN -->
+<div id="adminPage" class="page">
+  <div class="admin-nav">
+    <div class="admin-nav-logo">Som<span>Nest</span> Admin</div>
+    <div class="admin-nav-right">
+      <a href="#" class="admin-view-site" onclick="showPublic()">🌐 Arag Website</a>
+      <button class="admin-logout" onclick="logout()">🚪 Ka Bax</button>
+    </div>
+  </div>
+  <div class="admin-body">
+    <div class="admin-title">Dashboard</div>
+    <div class="admin-subtitle">Ku soo dhawoow SomNest Admin Panel</div>
+    <div class="admin-stats">
+      <div class="admin-stat-card"><div class="admin-stat-icon">🏠</div><div class="admin-stat-num" id="aStatTotal">0</div><div class="admin-stat-label">Guryaha Wadarta</div></div>
+      <div class="admin-stat-card"><div class="admin-stat-icon">💰</div><div class="admin-stat-num" id="aStatIib">0</div><div class="admin-stat-label">Iib</div></div>
+      <div class="admin-stat-card"><div class="admin-stat-icon">🔑</div><div class="admin-stat-num" id="aStatKiro">0</div><div class="admin-stat-label">Kiro</div></div>
+    </div>
+    <div class="admin-card">
+      <div class="admin-card-title">➕ Guri Cusub Ku Dar</div>
+      <div class="add-form">
+        <div class="add-form-group"><label class="add-label">Magaca Guriga</label><input class="add-input" id="aTitle" placeholder="Tusaale: Villa Hodan..."></div>
+        <div class="add-form-group"><label class="add-label">Xaafadda</label><input class="add-input" id="aLocation" placeholder="Tusaale: Hodan, Muqdisho"></div>
+        <div class="add-form-group"><label class="add-label">Nooca</label><select class="add-select" id="aType"><option value="iib">Iib</option><option value="kiro">Kiro</option></select></div>
+        <div class="add-form-group"><label class="add-label">Qiimaha ($)</label><input class="add-input" id="aPrice" placeholder="Tusaale: 85000"></div>
+        <div class="add-form-group"><label class="add-label">Qolalka</label><input class="add-input" id="aRooms" placeholder="Tusaale: 3"></div>
+        <div class="add-form-group"><label class="add-label">Musqusha</label><input class="add-input" id="aBaths" placeholder="Tusaale: 2"></div>
+        <div class="add-form-group"><label class="add-label">Dhismaha (m2)</label><input class="add-input" id="aSize" placeholder="Tusaale: 200"></div>
+        <div class="add-form-group"><label class="add-label">Emoji</label><select class="add-select" id="aIcon"><option value="🏠">🏠 Guri</option><option value="🏡">🏡 Villa</option><option value="🏢">🏢 Dhisme</option><option value="🌴">🌴 Garden</option></select></div>
+        <div class="add-form-group full"><label class="add-label">Sawirka URL (Optional)</label><input class="add-input" id="aImageUrl" placeholder="https://i.imgur.com/sawirka.jpg ..."></div>
+        <div class="add-form-group full"><label class="add-label">Faahfaahin</label><textarea class="add-textarea" id="aDesc" placeholder="Ku qor wixii macluumaad ah guriga..."></textarea></div>
+        <button class="add-btn" onclick="addProperty()">✅ Ku Dar Guriga</button>
+      </div>
+    </div>
+    <div class="admin-card">
+      <div class="admin-card-title">📋 Liiska Guryaha <span id="propCount" style="font-size:0.8rem;color:var(--text-muted);font-weight:400"></span></div>
+      <div style="overflow-x:auto;">
+        <table class="prop-table">
+          <thead><tr><th>Magac</th><th>Xaafad</th><th>Nooc</th><th>Qiime</th><th>Qolal</th><th>Tir</th></tr></thead>
+          <tbody id="adminTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL='https://buizklplxznokcqgusab.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ1aXprbHBseHpub2tjcWd1c2FiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc3NzYxMjQsImV4cCI6MjA5MzM1MjEyNH0.UYMGibUZAgrYbabb5Y72wcQspCdHcG7SmSLkrTBPNus';
+const PASSWORD='Moo9306';
+let properties=[];
+let currentFilter='';
+
+async function supabaseReq(method,path,body){
+  const res=await fetch(SUPABASE_URL+'/rest/v1/'+path,{
+    method,
+    headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json','Prefer':method==='POST'?'return=representation':''},
+    body:body?JSON.stringify(body):undefined
+  });
+  if(!res.ok)throw new Error(await res.text());
+  return method==='DELETE'?null:res.json();
+}
+
+async function loadProperties(){
+  try{properties=await supabaseReq('GET','properties?select=*&order=created_at.desc');return properties;}
+  catch(e){console.error(e);return[];}
+}
+
+function doLogin(){
+  const pass=document.getElementById('loginPass').value.trim();
+  const err=document.getElementById('loginError');
+  if(pass===PASSWORD){err.style.display='none';document.getElementById('loginPass').value='';showAdmin();}
+  else{err.style.display='block';document.getElementById('loginPass').value='';}
+}
+
+async function showPublic(){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('publicPage').classList.add('active');
+  document.getElementById('publicProps').innerHTML='<div class="loading">⏳ Guryaha waa la soo rarayo...</div>';
+  await loadProperties();
+  renderPublic();
+  window.scrollTo(0,0);
+}
+
+async function showAdmin(){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('adminPage').classList.add('active');
+  await loadProperties();
+  renderAdmin();
+  window.scrollTo(0,0);
+}
+
+function showLogin(){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('loginPage').classList.add('active');
+}
+
+function logout(){showPublic();}
+
+// Check if URL has #admin
+if(window.location.hash === '#admin') {
+  showLogin();
+} else {
+  showPublic();
+}
+
+// Listen for hash change
+window.addEventListener('hashchange', function() {
+  if(window.location.hash === '#admin') {
+    showLogin();
+  }
+});}
+
+function renderPublic(filter){
+  const type=filter!==undefined?filter:currentFilter;
+  const search=(document.getElementById('searchText')||{}).value||'';
+  const sl=search.toLowerCase();
+  let props=properties.filter(p=>{
+    const mt=!type||p.type===type;
+    const ms=!sl||(p.location||'').toLowerCase().includes(sl)||(p.title||'').toLowerCase().includes(sl);
+    return mt&&ms;
+  });
+  document.getElementById('statTotal').textContent=properties.length;
+  document.getElementById('statIib').textContent=properties.filter(p=>p.type==='iib').length;
+  document.getElementById('statKiro').textContent=properties.filter(p=>p.type==='kiro').length;
+  const container=document.getElementById('publicProps');
+  if(props.length===0){container.innerHTML='<div class="empty-state"><div class="empty-icon">🏚️</div><p>Guri lama helin.</p></div>';return;}
+  container.innerHTML='<div class="props-grid">'+props.map(p=>`
+    <div class="prop-card" onclick="openModal('${p.created_at}')">
+      <div class="prop-img">${p.icon||'🏠'}<span class="prop-badge badge-${p.type}">${p.type==='iib'?'Iib':'Kiro'}</span></div>
+      <div class="prop-body">
+        <div class="prop-price">${p.price}</div>
+        <div class="prop-title">${p.title}</div>
+        <div class="prop-location">📍 ${p.location}</div>
+        <div class="prop-features"><span class="prop-feat">🛏 ${p.rooms} Qol</span><span class="prop-feat">🚿 ${p.baths} Musqul</span><span class="prop-feat">📐 ${p.size}m²</span></div>
+        <div class="prop-actions">
+          <button class="btn-contact" onclick="event.stopPropagation();document.getElementById('contact').scrollIntoView({behavior:'smooth'})">📞 Xiriir</button>
+          <button class="btn-save" onclick="event.stopPropagation();showToast('❤️ La Kaydiyay!')">♡</button>
+        </div>
+      </div>
+    </div>`).join('')+'</div>';
+}
+
+function setFilter(type,btn){
+  currentFilter=type;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPublic(type);
+}
+
+function filterProps(){renderPublic(currentFilter);}
+
+function openModal(id){
+  const p=properties.find(x=>x.created_at===id);
+  if(!p)return;
+  document.getElementById('mIcon').textContent=p.icon||'🏠';
+  document.getElementById('mTitle').textContent=p.title;
+  document.getElementById('mPrice').textContent=p.price;
+  document.getElementById('mInfo').innerHTML=`
+    <div class="modal-info-item"><div class="modal-info-label">Nooc</div><div class="modal-info-val">${p.type==='iib'?'Iib':'Kiro'}</div></div>
+    <div class="modal-info-item"><div class="modal-info-label">Xaafad</div><div class="modal-info-val">${p.location}</div></div>
+    <div class="modal-info-item"><div class="modal-info-label">Qolal</div><div class="modal-info-val">${p.rooms} Qol</div></div>
+    <div class="modal-info-item"><div class="modal-info-label">Musqul</div><div class="modal-info-val">${p.baths}</div></div>
+    <div class="modal-info-item"><div class="modal-info-label">Dhisme</div><div class="modal-info-val">${p.size}m²</div></div>`;
+  document.getElementById('mDesc').textContent=p.description||'';
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal(){document.getElementById('modal').classList.remove('open');}
+document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+
+function renderAdmin(){
+  document.getElementById('aStatTotal').textContent=properties.length;
+  document.getElementById('aStatIib').textContent=properties.filter(p=>p.type==='iib').length;
+  document.getElementById('aStatKiro').textContent=properties.filter(p=>p.type==='kiro').length;
+  document.getElementById('propCount').textContent=properties.length+' guri';
+  const tbody=document.getElementById('adminTableBody');
+  if(properties.length===0){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;padding:3rem;color:var(--text-muted)">Guri lama daray weli!</td></tr>';return;}
+  tbody.innerHTML=properties.map(p=>`
+    <tr>
+      <td>${p.icon||'🏠'} ${p.title}</td>
+      <td>📍 ${p.location}</td>
+      <td><span class="table-badge table-${p.type}">${p.type==='iib'?'Iib':'Kiro'}</span></td>
+      <td style="font-weight:600;color:var(--green)">${p.price}</td>
+      <td>${p.rooms} Qol</td>
+      <td><button class="del-btn" onclick="deleteProperty('${p.created_at}')">🗑 Tir</button></td>
+    </tr>`).join('');
+}
+
+async function addProperty(){
+  const title=document.getElementById('aTitle').value.trim();
+  const location=document.getElementById('aLocation').value.trim();
+  const type=document.getElementById('aType').value;
+  const priceRaw=document.getElementById('aPrice').value.trim();
+  const rooms=document.getElementById('aRooms').value.trim();
+  const baths=document.getElementById('aBaths').value.trim();
+  const size=document.getElementById('aSize').value.trim();
+  const icon=document.getElementById('aIcon').value;
+  const description=document.getElementById('aDesc').value.trim();
+  if(!title||!location||!priceRaw||!rooms){showToast('⚠️ Buuxi dhammaan meelaha muhiimka ah!');return;}
+  const price=type==='iib'?'$'+Number(priceRaw).toLocaleString():'$'+Number(priceRaw).toLocaleString()+'/bil';
+  try{
+    showToast('⏳ Waa la kaydiyaa...');
+    const image_url=document.getElementById('aImageUrl').value.trim();
+    await supabaseReq('POST','properties',{title,location,type,price,rooms:Number(rooms)||1,baths:Number(baths)||1,size:Number(size)||0,icon,description:description||'Guri fiican oo ku yaal '+location,image_url:image_url||null});
+    ['aTitle','aLocation','aPrice','aRooms','aBaths','aSize','aDesc','aImageUrl'].forEach(id=>document.getElementById(id).value='');
+    await loadProperties();
+    renderAdmin();
+    showToast('✅ Guriga si fiican ayaa loo daray!');
+  }catch(e){showToast('❌ Khalad: '+e.message);}
+}
+
+async function deleteProperty(id){
+  if(!confirm('Ma hubtaa inaad tiriyso gurigaan?'))return;
+  try{
+    await supabaseReq('DELETE','properties?created_at=eq.'+encodeURIComponent(id));
+    await loadProperties();
+    renderAdmin();
+    showToast('🗑️ Guriga waa la tiriyay.');
+  }catch(e){showToast('❌ Khalad: '+e.message);}
+}
+
+async function submitContact(e){
+  e.preventDefault();
+  const btn=document.getElementById('submitBtn');
+  btn.textContent='⏳ Diraya...';btn.disabled=true;
+  const form=document.getElementById('contactForm');
+  const name=form.querySelector('[name="name"]').value;
+  const email=form.querySelector('[name="email"]').value;
+  try{
+    const data=new FormData(form);
+    const res=await fetch('https://api.web3forms.com/submit',{method:'POST',body:data});
+    const d=await res.json();
+    if(d.success){
+      showToast('✅ Codsigaaga waa la helay!');
+      // Send auto-reply if email provided
+      if(email){
+        emailjs.send('service_kzhwoda','template_e6pjg5d',{
+          name:name,
+          email:email
+        }).catch(()=>{});
+      }
+      form.reset();
+    }else showToast('❌ Khalad ayaa dhacay.');
+  }catch(e){showToast('❌ Khalad ayaa dhacay.');}
+  btn.textContent='📨 Dir Codsi';btn.disabled=false;
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+showPublic();
+
+// Secret admin access
+let logoClicks = 0;
+let logoTimer;
+function handleLogoClick() {
+  logoClicks++;
+  clearTimeout(logoTimer);
+  logoTimer = setTimeout(() => { logoClicks = 0; }, 3000);
+  if (logoClicks >= 5) { logoClicks = 0; showLogin(); }
+}
+let secretClicks = 0;
+let secretTimer;
+function handleSecretClick() {
+  secretClicks++;
+  clearTimeout(secretTimer);
+  secretTimer = setTimeout(() => { secretClicks = 0; }, 3000);
+  if (secretClicks >= 3) { secretClicks = 0; showLogin(); }
+}
+</script>
+</body>
+</html>
