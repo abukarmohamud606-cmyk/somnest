@@ -355,7 +355,7 @@ function renderPublic(filter){
         <div class="prop-price">${p.price}</div>
         <div class="prop-title">${p.title}</div>
         <div class="prop-location">📍 ${p.location}</div>
-        <div class="prop-features"><span class="prop-feat">🛏 ${p.rooms} Qol</span><span class="prop-feat">🚿 ${p.baths} Musqul</span><span class="prop-feat">📐 ${p.size}m²</span></div>
+        <div class="prop-features"><span class="prop-feat">🛏 ${p.rooms} Qol</span><span class="prop-feat">🚿 ${p.baths} Musqul</span><span class="prop-feat">📐 ${p.size}</span></div>
         <div class="prop-actions">
           <button class="btn-contact" onclick="event.stopPropagation();document.getElementById('contact').scrollIntoView({behavior:'smooth'})">📞 Xiriir</button>
           <button class="btn-save" onclick="event.stopPropagation();showToast('❤️ La Kaydiyay!')">♡</button>
@@ -384,7 +384,7 @@ function openModal(id){
     <div class="modal-info-item"><div class="modal-info-label">Xaafad</div><div class="modal-info-val">${p.location}</div></div>
     <div class="modal-info-item"><div class="modal-info-label">Qolal</div><div class="modal-info-val">${p.rooms} Qol</div></div>
     <div class="modal-info-item"><div class="modal-info-label">Musqul</div><div class="modal-info-val">${p.baths}</div></div>
-    <div class="modal-info-item"><div class="modal-info-label">Dhisme</div><div class="modal-info-val">${p.size}m²</div></div>`;
+    <div class="modal-info-item"><div class="modal-info-label">Dhisme</div><div class="modal-info-val">${p.size}</div></div>`;
   document.getElementById('mDesc').textContent=p.description||'';
   document.getElementById('modal').classList.add('open');
 }
