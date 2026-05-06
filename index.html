@@ -420,7 +420,8 @@ async function addProperty(){
   const icon=document.getElementById('aIcon').value;
   const description=document.getElementById('aDesc').value.trim();
   if(!title||!location||!priceRaw||!rooms){showToast('⚠️ Buuxi dhammaan meelaha muhiimka ah!');return;}
-  const price=type==='iib'?'$'+Number(priceRaw).toLocaleString():'$'+Number(priceRaw).toLocaleString()+'/bil';
+  const priceNum = Number(priceRaw);
+    const price = priceRaw==='0'||priceRaw===''||isNaN(priceNum) ? 'Nala Soo Xiriir' : (type==='iib'?'$'+priceNum.toLocaleString():'$'+priceNum.toLocaleString()+'/bil');
   try{
     showToast('⏳ Waa la kaydiyaa...');
     const image_url=document.getElementById('aImageUrl').value.trim();
