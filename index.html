@@ -2,6 +2,12 @@
 <html lang="so">
 <head>
 <meta charset="UTF-8">
+<meta name="theme-color" content="#1a6b3c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SomNest">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="https://i.ibb.co/6RW4FvTR/8349-CBCF-3-F5-C-44-D7-8-FDB-4-CD4-B9-A65508.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SomNest — Guryaha Muqdisho</title>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -496,6 +502,17 @@ function handleSecretClick() {
   clearTimeout(secretTimer);
   secretTimer = setTimeout(() => { secretClicks = 0; }, 3000);
   if (secretClicks >= 3) { secretClicks = 0; showLogin(); }
+}
+</script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('sw.js').then(function(reg){
+      console.log('SW registered');
+    }).catch(function(err){
+      console.log('SW error:', err);
+    });
+  });
 }
 </script>
 </body>

@@ -1,0 +1,22 @@
+{
+  "name": "SomNest Muqdisho",
+  "short_name": "SomNest",
+  "description": "Guryaha ugu fiican Muqdisho - iib iyo kiro",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8f6f1",
+  "theme_color": "#1a6b3c",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://i.ibb.co/6RW4FvTR/8349-CBCF-3-F5-C-44-D7-8-FDB-4-CD4-B9-A65508.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://i.ibb.co/6RW4FvTR/8349-CBCF-3-F5-C-44-D7-8-FDB-4-CD4-B9-A65508.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
